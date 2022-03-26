@@ -1,7 +1,7 @@
 /* eslint-disable no-process-exit */
 // yarn hardhat node
 // yarn hardhat run scripts/readPrice.js --network localhost
-const { ethers } = require("hardhat")
+import { ethers } from "hardhat";
 
 async function readPrice() {
   const priceConsumerV3 = await ethers.getContract("PriceConsumerV3")
