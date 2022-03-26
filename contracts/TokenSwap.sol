@@ -19,27 +19,27 @@ How to swap tokens
 contract TokenSwap {
     AggregatorV3Interface internal priceFeed;
 
-    IERC20 public token1;
-    address public owner1;
-    uint public amount1;
-    IERC20 public token2;
-    address public owner2;
-    uint public amount2;
+    IERC20 public tokenA;
+    address public ownerA;
+    uint public amountA;
+    IERC20 public tokenB;
+    address public ownerB;
+    uint public amountB;
 
     constructor(
-        address _token1,
-        address _owner1,
-        uint _amount1,
-        address _token2,
-        address _owner2,
-        uint _amount2
+        address _tokenA,
+        address _ownerA,
+        uint _amountA,
+        address _tokenB,
+        address _ownerB,
+        uint _amountB
     ) {
-        token1 = IERC20(_token1);
-        owner1 = _owner1;
-        amount1 = _amount1;
-        token2 = IERC20(_token2);
-        owner2 = _owner2;
-        amount2 = _amount2;
+        tokenA = IERC20(_tokenA);
+        ownerA = _ownerA;
+        amountA = _amountA;
+        tokenB = IERC20(_tokenB);
+        ownerB = _ownerB;
+        amountB = _amountB;
 
       /**
      * Network: Rinkeby
@@ -50,18 +50,18 @@ contract TokenSwap {
     }
 
     function swap() public {
-        require(msg.sender == owner1 || msg.sender == owner2, "Not authorized");
+        require(msg.sender == ownerA || msg.sender == ownerB, "owners can only swap");
         require(
-            token1.allowance(owner1, address(this)) >= amount1,
-            "Token 1 allowance too low"
+            tokenA.allowance(ownerA, address(this)) >= 20,
+            "your token balance is too low"
         );
         require(
-            token2.allowance(owner2, address(this)) >= amount2,
-            "Token 2 allowance too low"
+            tokenB.allowance(ownerB, address(this)) >= 20,
+            "your token balance too low"
         );
 
-        _safeTransferFrom(token1, owner1, owner2, amount1);
-        _safeTransferFrom(token2, owner2, owner1, amount2);
+        _safeTransferFrom(tokenA, ownerA, ownerB, amountA);
+        _safeTransferFrom(tokenB, ownerB, ownerA, amountB);
     }
 
     function _safeTransferFrom(
@@ -74,7 +74,7 @@ contract TokenSwap {
         require(sent, "Token transfer failed");
     }
 
-    function getLatestPrice() public view returns (int) {
+    function getLatestPrice(IERC20 token) public view returns (int) {
         (
             /*uint80 roundID*/,
             int price,
