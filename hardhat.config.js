@@ -2,6 +2,10 @@ require("@nomiclabs/hardhat-waffle")
 // require("dotenv").config()
 // const { VRF_SUBSCRIPTION_ID, RINKEBY_RPC_URL, PRIVATE_KEY } = process.env
 
+/**
+ * @type import('hardhat/config').HardhatUserConfig
+ */
+
 module.exports = {
   solidity: "^0.8.4",
   defaultNetwork: "rinkeby",
