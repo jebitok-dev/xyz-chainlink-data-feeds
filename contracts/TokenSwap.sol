@@ -6,25 +6,23 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 contract TokenSwap {
     AggregatorV3Interface internal priceFeed;
 
-    IERC20 public tokenA;
-    address public ownerA;
-    uint public amountA;
-    IERC20 public tokenB;
-    address public ownerB;
-    uint public amountB;
+    IERC DAI;
+    address  daiAdd  = 0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063;
+    uint  amountA;
+    IERC20 USDC;
+    address  USDCAdd = 0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174;
+    uint  amountB;
 
     constructor(
-        address _tokenA,
-        address _ownerA,
+        address _daiAdd,
         uint _amountA,
-        address _tokenB,
-        address _ownerB,
+        address _USDCAdd,
         uint _amountB
     ) {
-        tokenA = IERC20(_tokenA);
+        daiAdd = IERC20(_tokenA);
         ownerA = _ownerA;
         amountA = _amountA;
-        tokenB = IERC20(_tokenB);
+        USDCAdd = IERC20(_tokenB);
         ownerB = _ownerB;
         amountB = _amountB;
 
@@ -63,12 +61,14 @@ contract TokenSwap {
 
     function getLatestPrice(IERC20 token) public view returns (int) {
         (
-            /*uint80 roundID*/,
+            uint80 roundID,
             int price,
-            /*uint startedAt*/,
-            /*uint timeStamp*/,
-            /*uint80 answeredInRound*/
+            uint startedAt,
+            uint timeStamp,
+            uint80 answeredInRound
         ) = priceFeed.latestRoundData();
+        currentRate = price;
+        decimals = priceFeed.decimals();
         return price;
     }
 }
