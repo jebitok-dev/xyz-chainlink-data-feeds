@@ -1,5 +1,9 @@
 require("@nomiclabs/hardhat-waffle")
-// require("dotenv").config()
+require("dotenv").config();
+require("@nomiclabs/hardhat-etherscan");
+require("@nomiclabs/hardhat-waffle"); 
+require("hardhat-gas-reporter");
+
 // const { VRF_SUBSCRIPTION_ID, RINKEBY_RPC_URL, PRIVATE_KEY } = process.env
 
 /**
@@ -16,12 +20,11 @@ module.exports = {
       //   // blockNumber: FORKING_BLOCK_NUMBER,
       //   // enabled: false,
       // },
-      chainId: 4,
+      // chainId: 4,
     },
     rinkeby: {
-      url: process.env.RINKEBY_RPC_URL || "",
-      accounts: process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
-      chainId: 4
+      url: process.env.RPC_URL || "",
+      accounts: process.env.PRIVATE_KEY,
     },
   },
 }
